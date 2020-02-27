@@ -1,0 +1,19 @@
+version: "3"
+services:
+    php:
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+        environment:
+            APP_ENV: dev
+        volumes:
+            - ./:/code
+    web:
+        image: nginx:latest
+        ports:
+            - "8080:80"
+        volumes:
+            - ./src/public:/code/src/public
+            - ./docker/nginx/site.conf:/etc/nginx/conf.d/default.conf
+        links:
+            - php

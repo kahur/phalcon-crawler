@@ -1,0 +1,13 @@
+application:
+    defaultNamespace: AA\Controller
+    namespaces:
+        AA\Controller: ../Controller
+        AA\Library: ../Library
+        AA\Service: ../Services
+    router:
+        adapter: Annotations
+        default:
+            controller: index
+            action: index
+        routes:
+            resource: ../config/routes.yml
