@@ -1,9 +1,7 @@
 {
-    "require": {
-        "phpmailer/phpmailer": "^6.0"
-    },
     "require-dev": {
-        "snowair/phalcon-debugbar": "^1.2"
+        "snowair/phalcon-debugbar": "^1.2",
+        "phpunit/php"
     },
     "autoload": {
         "psr-4": {
