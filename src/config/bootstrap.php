@@ -1,6 +1,9 @@
 <?php
 
 use AA\Application;
+use AA\Library\Http\HttpClient;
+use AA\Library\Http\Response\ResponseFactory;
+use AA\Library\Http\Transfer\Adapter\Curl;
 use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Http\Request;
@@ -33,6 +36,10 @@ $di->set('dispatcher', function() use($config) {
     return $dispatcher;
 });
 
+$di->set('httpClient', function() use($config) {
+    return new HttpClient(new Curl($config->httpClient->options->toArray()), new ResponseFactory());
+});
+
 $app = new Application($di);
 
 try {
@@ -41,6 +48,7 @@ try {
 
     $response->send();
 } catch (\Exception $e) {
+    throw $e;
     echo "ERROR occured";
     exit;
 }

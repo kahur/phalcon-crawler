@@ -11,3 +11,7 @@ application:
             action: index
         routes:
             resource: ../config/routes.yml
+httpClient:
+    options:
+        return_transfer: 1
+        return_headers: 1
