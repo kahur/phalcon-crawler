@@ -1,7 +1,7 @@
 {
     "require-dev": {
         "snowair/phalcon-debugbar": "^1.2",
-        "phpunit/php"
+        "phpunit/phpunit" : "^6.5"
     },
     "autoload": {
         "psr-4": {
