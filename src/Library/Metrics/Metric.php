@@ -41,8 +41,8 @@ class Metric implements MetricInterface
      */
     public function updateValue($value)
     {
-        $this->stream[] = $this->getValue();
         $this->value = $value;
+        $this->stream[] = $value;
     }
 
     /**
@@ -56,5 +56,15 @@ class Metric implements MetricInterface
     public function __toString()
     {
         // TODO: Implement __toString() method.
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            $this->getName() => $this->getValue()
+        ];
     }
 }

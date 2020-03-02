@@ -104,8 +104,10 @@ class MetricsServiceTest extends TestCase
 
         $metrics = $metricService->getGroupMetrics('myGroup');
 
-        foreach($metrics as $i => $m) {
+        $i = 0;
+        foreach($metrics as $m) {
             $this->assertEquals($names[$i], $m->getName());
+            $i++;
         }
     }
 

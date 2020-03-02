@@ -7,6 +7,7 @@ use AA\Library\Http\Transfer\Adapter\Curl;
 use AA\Library\Metrics\Metrics;
 use AA\Library\SimpleHtml\SimpleHtml;
 use AA\Services\MetricsService;
+use AA\Services\SiteStatsService;
 use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Http\Request;
@@ -51,6 +52,14 @@ $di->set('metricsService', function() {
     return new MetricsService(new Metrics());
 });
 
+$di->set('siteStatsService', function() use($di) {
+    return new SiteStatsService(
+        $di->get('httpClient'),
+        $di->get('htmlParser'),
+        $di->get('metricsService')
+    );
+});
+
 $app = new Application($di);
 
 try {
@@ -59,6 +68,7 @@ try {
 
     $response->send();
 } catch (\Exception $e) {
+    throw $e;
     echo "ERROR occured";
     exit;
 }

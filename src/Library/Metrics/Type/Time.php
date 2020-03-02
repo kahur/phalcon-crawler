@@ -16,28 +16,19 @@ class Time extends Metric
         $startTime = $this->value['start'];
         $endTime = $this->value['end'] ?? microtime(true);
 
-        $diff = round($endTime - $startTime);
-        $minutes = floor($diff / 60); //only minutes
-        $seconds = $diff % 60; //remaining seconds, using modulo operator
-
-        return $minutes . ':' .$seconds;
+        return $endTime - $startTime;
     }
 
     public function start()
     {
-        $this->updateValue([
+        $this->value = [
             'start' => microtime(true),
-            'end'   => null
-        ]);
+            'end' => null
+        ];
     }
 
     public function stop()
     {
-        $value = array_merge(
-            $this->getValue(),
-            ['end' => microtime(true)]
-        );
-
-        $this->updateValue($value);
+        $this->value['end'] = microtime(true);
     }
 }

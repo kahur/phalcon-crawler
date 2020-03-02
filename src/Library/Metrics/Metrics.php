@@ -2,6 +2,7 @@
 
 namespace AA\Library\Metrics;
 
+use AA\Library\Metrics\Type\Averge;
 use AA\Library\Metrics\Type\Count;
 use AA\Library\Metrics\Type\Time;
 
@@ -45,5 +46,15 @@ class Metrics
     public function createCountMetric($name, $startValue = 0)
     {
         return new Count($name, $startValue);
+    }
+
+    /**
+     * @param $name
+     *
+     * @return Averge
+     */
+    public function createAvergeMetric($name)
+    {
+        return new Averge($name);
     }
 }
