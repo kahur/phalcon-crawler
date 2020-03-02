@@ -1,4 +1,3 @@
 # specific setting for annotation scans
 routes:
     - AA\Controller\Stats
-    - AA\Controller\Test
