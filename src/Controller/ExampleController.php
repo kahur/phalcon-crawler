@@ -1,24 +1,24 @@
 <?php
 
+
 namespace AA\Controller;
 
 use AA\Library\Phalcon\Http\JsonResponse;
 use AA\Services\SiteStatsService;
-use Phalcon\Assets\Asset\Js;
 
 /**
- * @RoutePrefix('/api/stats')
+ * @RoutePrefix('/api/example')
  */
-class StatsController extends BaseController
+class ExampleController extends BaseController
 {
     /**
-     * @Post(
+     * @Get(
      *     '/fetch-single'
      * )
      */
     public function singleStatsAction()
     {
-        $url = $this->request->getPost('url');
+        $url = 'https://agencyanalytics.com/';
 
         if (!$url) {
             return new JsonResponse(['error' => 'No url provided']);
@@ -41,13 +41,19 @@ class StatsController extends BaseController
     }
 
     /**
-     * @Post(
+     * @Get(
      *     '/fetch-multi'
      * )
      */
     public function bulkStatsAction()
     {
-        $urls = $this->request->getPost('urls');
+        $urls = [
+            'https://agencyanalytics.com/features',
+            'https://agencyanalytics.com/feature/seo-reporting-software',
+            'https://agencyanalytics.com/integrations',
+            'https://agencyanalytics.com/pricing',
+            'https://agencyanalytics.com/test'
+        ];
 
         if (empty($urls)) {
             return new JsonResponse(['error' => 'No urls provided']);
@@ -86,5 +92,6 @@ class StatsController extends BaseController
         } catch (\RuntimeException $e) {
             return new JsonResponse(['error' => $e->getMessage()]);
         }
+
     }
 }
