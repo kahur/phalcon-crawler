@@ -28,10 +28,9 @@ class Application extends \Phalcon\Mvc\Application
             throw new \Exception('Unsuported router adapter');
         }
 
-        $this->getDI()->set('router', function() use($adapterName, $routerConfig) {
+        $this->getDI()->setShared('router', function() use($adapterName, $routerConfig) {
             /** @var Annotations $router */
             $router = new $adapterName;
-
             $routes = $routerConfig['routes'];
 
             if (isset($routes['resource'])) {

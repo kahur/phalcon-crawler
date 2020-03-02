@@ -9,6 +9,9 @@ application:
         default:
             controller: index
             action: index
+        notFound:
+            controller: notFound
+            action: index
         routes:
             resource: ../config/routes.yml
 httpClient:

@@ -34,7 +34,26 @@ $di->set('view', function() {
 }, true);
 
 $di->set('dispatcher', function() use($config) {
+    $eventsManager = new \Phalcon\Events\Manager();
+    //Attach a listener
+    $eventsManager->attach("dispatch", function ($event, $dispatcher, $exception) use($config) {
+
+        // controller or action doesn't exist
+        if ($event->getType() == 'beforeException') {
+            switch ($exception->getCode()) {
+                case \Phalcon\Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
+                case \Phalcon\Dispatcher::EXCEPTION_INVALID_HANDLER:
+                case \Phalcon\Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
+                case \Phalcon\Dispatcher::EXCEPTION_INVALID_PARAMS:
+                    $dispatcher->forward($config->application->router->notFound->toArray());
+
+                    return false;
+            }
+        }
+    });
+
     $dispatcher = new Dispatcher();
+    $dispatcher->setEventsManager($eventsManager);
     $dispatcher->setDefaultNamespace($config->application->defaultNamespace);
 
     return $dispatcher;
@@ -68,7 +87,6 @@ try {
 
     $response->send();
 } catch (\Exception $e) {
-    throw $e;
     echo "ERROR occured";
     exit;
 }
