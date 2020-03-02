@@ -12,6 +12,7 @@ class MetricsService
     const METRIC_TYPE_TIME = 'time';
     const METRIC_TYPE_COUNT = 'count';
     const METRIC_TYPE_VALUE = 'value';
+    const METRIC_TYPE_AVERGE = 'averge';
 
     /**
      * @var Metrics
@@ -61,6 +62,9 @@ class MetricsService
             case self::METRIC_TYPE_VALUE:
                 $metric = $this->metricFactory->createMetric($name, $initValue);
                 break;
+            case self::METRIC_TYPE_AVERGE:
+                $metric = $this->metricFactory->createAvergeMetric($name);
+                break;
             default:
                 throw new \RuntimeException('Unsuported metric');
                 break;
@@ -73,11 +77,12 @@ class MetricsService
 
 
     /**
-     * @param $name
+     * @param        $name
+     * @param string $groupName
      *
-     * @return mixed|null
+     * @return MetricInterface
      */
-    public function getMetric($name, $groupName = 'default')
+    public function getMetric($name, $groupName = 'default'): ?MetricInterface
     {
         if (!isset($this->groups[$groupName])) {
             return null;
@@ -113,11 +118,7 @@ class MetricsService
      */
     public function getGroupMetrics($groupName)
     {
-        $group = $this->metricGroups[$groupName] ?? [];
-
-        foreach ($group as $index) {
-            yield $this->getMetric($index);
-        }
+        return $this->groups[$groupName] ?? [];
     }
 
     /**

@@ -14,7 +14,7 @@ class Count extends Metric
     /**
      * @var int|int
      */
-    protected $value = 0;
+    protected $value = null;
 
     /**
      * Count constructor.
@@ -22,10 +22,12 @@ class Count extends Metric
      * @param string $name
      * @param int    $startValue
      */
-    public function __construct(string $name, $startValue = 0)
+    public function __construct(string $name, $startValue = null)
     {
         $this->name = $name;
-        $this->value = $startValue;
+        if ($startValue) {
+            $this->updateValue($startValue);
+        }
     }
 
     /**
