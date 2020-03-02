@@ -4,7 +4,9 @@ use AA\Application;
 use AA\Library\Http\HttpClient;
 use AA\Library\Http\Response\ResponseFactory;
 use AA\Library\Http\Transfer\Adapter\Curl;
+use AA\Library\Metrics\Metrics;
 use AA\Library\SimpleHtml\SimpleHtml;
+use AA\Services\MetricsService;
 use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Http\Request;
@@ -43,6 +45,10 @@ $di->set('httpClient', function() use($config) {
 
 $di->set('htmlParser', function() {
     return new SimpleHtml();
+});
+
+$di->set('metricsService', function() {
+    return new MetricsService(new Metrics());
 });
 
 $app = new Application($di);
