@@ -4,6 +4,7 @@ use AA\Application;
 use AA\Library\Http\HttpClient;
 use AA\Library\Http\Response\ResponseFactory;
 use AA\Library\Http\Transfer\Adapter\Curl;
+use AA\Library\SimpleHtml\SimpleHtml;
 use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Http\Request;
@@ -40,6 +41,10 @@ $di->set('httpClient', function() use($config) {
     return new HttpClient(new Curl($config->httpClient->options->toArray()), new ResponseFactory());
 });
 
+$di->set('htmlParser', function() {
+    return new SimpleHtml();
+});
+
 $app = new Application($di);
 
 try {
@@ -48,7 +53,6 @@ try {
 
     $response->send();
 } catch (\Exception $e) {
-    throw $e;
     echo "ERROR occured";
     exit;
 }
